@@ -22,6 +22,7 @@ exports.updateEvents = function()
         {
             events = tempEvents;
             tempEvents = [];
+            console.log(new Date() + " - Updated rss feeds");
         }
     });
 }
@@ -30,7 +31,7 @@ function getData(url, callback)
 {
     try
     {
-        http.request(url, function(error, response){
+        http.request(url, function(response){
             var tempXML = '';
             response.on("error", function(error){
                 callback(error);
@@ -53,14 +54,14 @@ function processXML(data, callback)
 {
     try
     {
-        xml2js.parseString(data, {ExplicitArray: true}, function(error, result){
+        xml2js.parseString(data, {explicitArray: false}, function(error, result){
             if(error)
             {
                 callback(error);
             }
             else
             {
-                if( result.rss.channel.item.length > 0)
+                if( typeof(result.rss.channel.item.length) !== "undefined")
                 {
                     result.rss.channel.item.forEach(function(event){
                         tempEvents.push(event);
@@ -89,3 +90,4 @@ exports.getEvents = function()
 {
     return events;
 }
+
