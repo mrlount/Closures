@@ -33,3 +33,21 @@ exports.getBlockedEvents = function()
     
     return results;
 }
+
+exports.addCustomEvent = function(event)
+{
+    var tempEvent = {};
+    for (var property in event)
+    {
+        if(event.hasOwnProperty(property))
+        {
+            tempEvent[property] = xssfilters.inHTMLData(event[property]);
+        }
+    }
+    customEvents.push(tempEvent);
+}
+
+exports.getCustomEvents = function()
+{
+    return customEvents;
+}
