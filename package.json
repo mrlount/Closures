@@ -1,0 +1,23 @@
+{
+  "name": "closures",
+  "version": "1.0.0",
+  "description": "Traffic information tools",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine-node specs/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrlount/closures.git"
+  },
+  "author": "Chris Lount",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/mrlount/closures/issues"
+  },
+  "homepage": "https://github.com/mrlount/closures#readme",
+  "dependencies": {
+    "async": "^2.0.0-rc.5",
+    "xml2js": "^0.4.16"
+  }
+}
