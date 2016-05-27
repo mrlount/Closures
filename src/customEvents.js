@@ -24,14 +24,18 @@ exports.getBlockedEvents = function()
     
     events.forEach(function(event){
         blockedEvents.forEach(function(block){
-            if(block.reference === event.reference)
+            if(block === event.reference)
             {
                 results.push(event);
             }
         });
     });
-    
     return results;
+}
+
+exports.removeBlock = function(reference)
+{
+    blockedEvents = blockedEvents.splice(0, blockedEvents.indexOf(reference));
 }
 
 exports.addCustomEvent = function(event)
