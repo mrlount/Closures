@@ -55,3 +55,13 @@ exports.getCustomEvents = function()
 {
     return customEvents;
 }
+
+exports.removeCustomEvent = function(reference)
+{
+    customEvents.forEach(function(event){
+        if(event.reference === reference)
+        {
+            customEvents = customEvents.splice(0, customEvents.indexOf(event));
+        }
+    })
+}
