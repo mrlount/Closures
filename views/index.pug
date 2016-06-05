@@ -1,0 +1,41 @@
+doctype html
+html(lang="en")
+  head
+    include ./header.pug
+    script(src="static/scripts/index.js")
+  body
+    - var TMap = true;
+    include ./navbar.pug
+    div(class="container-fluid")
+      div(class="row")
+        div(class="col-sm-10 col-xs-12")
+          div(id="map")
+        div(class="col-sm-2 col-xs-12")
+          div(class="panel panel-default")
+            div(class="panel-body")
+              div
+                img(src="static/images/accidents.png", style="display:inline-block")
+                span  Accident    
+              div(class="map-legend")
+                img(src="static/images/congestions.png", style="display:inline-block")
+                span  Congestion    
+              div(class="map-legend")
+                img(src="static/images/incidents.png", style="display:inline-block")
+                span  Incident  
+              div(class="map-legend")
+                img(src="static/images/roadworks.png", style="display:inline-block")
+                span  Roadworks            
+              div(class="map-legend")
+                img(src="static/images/future-roadworks.png", style="display:inline-block")
+                span  Pending Roadworks
+              hr
+              div(class="checkbox")
+                label(for="includeslips")
+                  input(type="checkbox", value="includeslips", id="includeslips" onclick="getRoadworks()") 
+                  | Include works on slip roads
+              div(class="checkbox")
+                label(for="includeslanes")
+                  input(type="checkbox", value="includeslanes", id="includeslanes" onclick="getRoadworks()") 
+                  | Include works with only lane closures
+              
+    script(src="https://maps.googleapis.com/maps/api/js?callback=initMap", async, defer)

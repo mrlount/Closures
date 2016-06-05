@@ -1,24 +1,35 @@
 {
   "name": "closures",
-  "version": "1.0.0",
-  "description": "Traffic information tools",
+  "version": "0.1.0",
+  "description": "http://closures.org.uk",
   "main": "index.js",
+  "author": "http://warerebel.com",
   "scripts": {
+    "start": "node src/index.js",
     "test": "jasmine-node specs/"
   },
+  "license": "GPL-3.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mrlount/closures.git"
+    "url": "https://github.com/mrlount/closures"
   },
-  "author": "Chris Lount",
-  "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/mrlount/closures/issues"
   },
-  "homepage": "https://github.com/mrlount/closures#readme",
   "dependencies": {
-    "async": "^2.0.0-rc.5",
+    "bootstrap": "^3.3.6",
+    "compression": "^1.6.2",
+    "express": "^4.13.4",
+    "helmet": "^2.1.0",
+    "jquery": "^2.2.4",
+    "pug": "^2.0.0-beta2",
     "xml2js": "^0.4.16",
     "xss-filters": "^1.2.6"
+  },
+  "devDependencies": {
+    "jshint": "^2.9.2"
+  },
+  "jshintConfig": {
+    "node": true
   }
 }
