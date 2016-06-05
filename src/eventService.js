@@ -26,6 +26,7 @@ eventService.prototype.getEventFactory = function(){
 eventService.prototype.getEvents = function( options, callback){
     var me = this;
     var results = [];
+    options.targetDate = new Date(options.targetDate);
     var events = this.eventFactory.getUnblockedEvents();
     events.forEach(function(event){
         var itemDate = new Date(event.eventStart);
