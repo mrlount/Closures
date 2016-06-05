@@ -37,11 +37,11 @@ html(lang="en")
               hr
               div(class="checkbox")
                 label(for="includeslips")
-                  input(type="checkbox", value="includeslips", id="includeslips" onclick="getRoadworks()") 
+                  input(type="checkbox", value="includeslips", id="includeslips" onclick="updateEvents()") 
                   | Include works on slip roads
               div(class="checkbox")
                 label(for="includeslanes")
-                  input(type="checkbox", value="includeslanes", id="includeslanes" onclick="getRoadworks()") 
+                  input(type="checkbox", value="includeslanes", id="includeslanes" onclick="updateEvents()") 
                   | Include works with only lane closures
               
     script(src="https://maps.googleapis.com/maps/api/js?callback=initMap", async, defer)
