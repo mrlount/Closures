@@ -1,6 +1,6 @@
 "use strict";
 
-var xssFilters = require("xss-Filters");
+var xssFilters = require("xss-filters");
 
 function customEvent(){
     /*jshint validthis:true */
