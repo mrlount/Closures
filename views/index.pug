@@ -8,9 +8,9 @@ html(lang="en")
     include ./navbar.pug
     div(class="container-fluid")
       div(class="row")
-        div(class="col-sm-10 col-xs-12")
+        div(class="col-sm-9 col-xs-12")
           div(id="map")
-        div(class="col-sm-2 col-xs-12")
+        div(class="col-sm-3 col-xs-12")
           div(class="panel panel-default")
             div(class="panel-body")
               div
@@ -21,7 +21,13 @@ html(lang="en")
                 span  Congestion    
               div(class="map-legend")
                 img(src="static/images/incidents.png", style="display:inline-block")
-                span  Incident  
+                span  Incident
+              div(class="map-legend")
+                img(src="static/images/closed.png", style="display:inline-block")
+                span  Planned Closure
+              div(class="map-legend")
+                img(src="static/images/future-closed.png", style="display:inline-block")
+                span  Pending Planned Closure    
               div(class="map-legend")
                 img(src="static/images/roadworks.png", style="display:inline-block")
                 span  Roadworks            

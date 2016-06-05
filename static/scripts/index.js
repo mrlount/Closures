@@ -6,7 +6,7 @@ function initMap()
     $("#map").css("height", height.toString() + "px");
     
     map = new google.maps.Map(document.getElementById("map"), {
-        center: {lat: -34.397, lng: 150.644},
-        zoom: 8
+        center: {lat: 52.486243, lng: -1.890401},
+        zoom: 9
     });
 }
