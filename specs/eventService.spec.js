@@ -34,7 +34,7 @@ eventFactory.addCustomEvent(customEventFive);
 
 describe("Request events and check search criteria", function(){
     it("Gets full closures on main carriageways today", function(done){
-        eventService.getEvents({ slips: "N", slanes: "N", targetDate: new Date() }, function(error, results){
+        eventService.getEvents({ slips: "N", slanes: "N", startDate: new Date() }, function(error, results){
             var targetArray = [];
             targetArray.push(eventOne);
             targetArray.push(eventTwo);
@@ -52,7 +52,7 @@ describe("Request events and check search criteria", function(){
         });
     });
     it("Gets full closures on slips and main carriageway today",function(done){
-        eventService.getEvents({ slips: "Y", slanes: "N", targetDate: new Date() }, function(error, results){
+        eventService.getEvents({ slips: "Y", slanes: "N", startDate: new Date() }, function(error, results){
             var targetArray = [];
             targetArray.push(eventOne);
             targetArray.push(eventTwo);
@@ -72,7 +72,7 @@ describe("Request events and check search criteria", function(){
         });
     });
     it("Gets lane closures on main carriageway today",function(done){
-        eventService.getEvents({ slips: "N", slanes: "Y", targetDate: new Date() }, function(error, results){
+        eventService.getEvents({ slips: "N", slanes: "Y", startDate: new Date() }, function(error, results){
             var targetArray = [];
             targetArray.push(eventOne);
             targetArray.push(eventTwo);
@@ -92,7 +92,7 @@ describe("Request events and check search criteria", function(){
         });
     });
     it("Gets lane closures on main carriageway and slips today",function(done){
-        eventService.getEvents({ slips: "Y", slanes: "Y", targetDate: new Date() }, function(error, results){
+        eventService.getEvents({ slips: "Y", slanes: "Y", startDate: new Date() }, function(error, results){
             var targetArray = [];
             targetArray.push(eventOne);
             targetArray.push(eventTwo);
@@ -115,7 +115,7 @@ describe("Request events and check search criteria", function(){
         });
     });
     it("Gets full closures on main carriageway tomorrow",function(done){
-        eventService.getEvents({ slips: "Y", slanes: "Y", targetDate: tomorrow }, function(error, results){
+        eventService.getEvents({ slips: "Y", slanes: "Y", startDate: tomorrow }, function(error, results){
             var targetArray = [];
             targetArray.push(eventOne);
             targetArray.push(eventTwo);
