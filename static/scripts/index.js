@@ -86,7 +86,13 @@ function placeEvents(data)
         contentString += event.title + '</div><div class="panel-body ' + panelClass + '">';
         contentString += event.description.replace(/\n/g, "<br>");
         contentString += '</div><div class="panel-footer ' + panelClass + '">';
-        contentString += event.reference + '</div></div>';
+        contentString += event.reference;
+        contentString += '<span><input type="text" id="' + event.reference + '" style="margin: 2px"><input type="button" class="btn btn-default" value="Remove" onclick="removeEvent(';
+        contentString += "'";
+        contentString += event.reference;
+        contentString += "'";
+        contentString += ')"></span>'; 
+        contentString += '</div></div>';
         
         var infowindow = new google.maps.InfoWindow({
             content: contentString
@@ -132,4 +138,15 @@ function roadworksIcon(event)
     }   
 }
 
-
+function removeEvent(eventId)
+{
+    var pin = document.getElementById(eventId);
+    var options = {
+        pin: pin.value,
+        block: eventId
+    };
+    $.ajax("block", {
+        method: "POST", 
+        data: options
+    }).done(updateEvents());
+}
