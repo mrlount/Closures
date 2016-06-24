@@ -47,7 +47,7 @@ eventFactory.prototype.parseXML = function(xmlData){
         }
         else
         {
-            if(typeof(result.rss.channel.item.length) !== "undefined")
+            if(typeof(result.rss.channel.item) !== "undefined" && typeof(result.rss.channel.item.length) !== "undefined")
             {
                 result.rss.channel.item.forEach(function(item){
                     me.events.addEvent(item);
