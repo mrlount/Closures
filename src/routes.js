@@ -47,7 +47,8 @@ router.post("/customevent", function(req, res){
         event.description = "Status: " + req.body.status + "\n" + "Lanes Closed: " + req.body.lanes + "\n" + "Description: " + req.body.description;
         event.latitude = req.body.latitude;
         event.longitude = req.body.longitude;
-        event.reference = "Custom Event";
+        var reference = new Date().getDate() + "-" + new Date().getMonth() + "-" + new Date().getYear() + "-" + Math.floor(Math.random() * 1000);
+        event.reference = reference;
         event.eventStart = req.body.eventStart;
         eventFactory.addCustomEvent(event);
         res.render('index');
@@ -56,6 +57,40 @@ router.post("/customevent", function(req, res){
     {
         res.sendStatus(403);
     }
+});
+
+router.get("/blockedList", function(req, res){
+    res.render('blocked');
+});
+
+router.get("/blockList", function(req, res){
+    var blocks = eventFactory.getBlockList();
+    var events = eventFactory.getEvents();
+    var results = [];
+    events.forEach(function(event){
+        if (blocks.indexOf(event.reference) > -1){
+            results.push(event);
+        };
+    });
+
+    res.json(results);
+});
+
+router.post("/blocklist", function(req,res){
+    eventFactory.removeBlock(req.body.reference);
+});
+
+router.get("/customEvents", function(req, res){
+    res.render('custom');
+});
+
+router.get("/customList", function(req, res){
+    var results = eventFactory.getCustomEvents();
+    res.json(results);
+});
+
+router.post("/customList", function(req,res){
+    eventFactory.removeCustomEvent(req.body.reference);
 });
 
 module.exports = router;

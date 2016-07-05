@@ -17,6 +17,7 @@
     "url": "https://github.com/mrlount/closures/issues"
   },
   "dependencies": {
+    "body-parser": "^1.15.2",
     "bootstrap": "^3.3.6",
     "compression": "^1.6.2",
     "express": "^4.13.4",

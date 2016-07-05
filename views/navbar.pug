@@ -6,10 +6,12 @@ nav(class="navbar navbar-default")
         span(class="icon-bar")
         span(class="icon-bar")
         span(class="icon-bar")
-      a(class="navbar-brand", href="#") Planned Works Information        
+      a(class="navbar-brand", href="/") Planned Works Information        
     div(class="collapse navbar-collapse", id="navbar-collapse-1")
       ul(class="nav navbar-nav")
         li(class=TMap ? 'active' : '') 
           a(href="/") Traffic Map
-        li(class=HistoryMap ? 'active' : '') 
-          a(href="/historymap") History Map
+        li(class=BlockedEvents ? 'active' : '') 
+          a(href="/blockedList") Blocked List
+        li(class=CustomEvents ? 'active' : '') 
+          a(href="/customEvents") Custom Events
