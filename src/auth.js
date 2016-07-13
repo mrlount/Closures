@@ -19,7 +19,7 @@ auth.prototype.checkPin = function(pin)
 
     if(this.pinArray.indexOf(pin) > -1)
     {
-        return true;
+        return this.pinArray.indexOf(pin);
     }
     else
     {

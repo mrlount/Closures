@@ -26,7 +26,7 @@ router.get("/events", function(req, res){
 router.post("/block", function(req, res){
     if(auth.checkPin(req.body.pin))
     {
-        eventFactory.addBlock(req.body.block, req.body.pin);
+        eventFactory.addBlock(req.body.block, auth.checkPin(req.body.pin));
         res.sendStatus(200);
     }
     else
@@ -50,6 +50,7 @@ router.post("/customevent", function(req, res){
         var reference = new Date().getDate() + "-" + new Date().getMonth() + "-" + new Date().getYear() + "-" + Math.floor(Math.random() * 1000);
         event.reference = reference;
         event.eventStart = req.body.eventStart;
+        event.creator = auth.checkPin(req.body.pin);
         eventFactory.addCustomEvent(event);
         res.render('index');
     }
@@ -64,13 +65,22 @@ router.get("/blockedList", function(req, res){
 });
 
 router.get("/blockList", function(req, res){
-    var blocks = eventFactory.getBlockList();
+    var blocks = eventFactory.getBlocks();
     var events = eventFactory.getEvents();
     var results = [];
     events.forEach(function(event){
+    
+    			blocks.forEach(function(block){
+    				if(block.reference === event.reference)
+    				{
+    					event.creator = block.id;
+    					results.push(event);
+    				}
+    			});
+    /*
         if (blocks.indexOf(event.reference) > -1){
             results.push(event);
-        };
+        };*/
     });
 
     res.json(results);
