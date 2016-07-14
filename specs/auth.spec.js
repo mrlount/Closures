@@ -9,7 +9,7 @@ var auth = new authModule();
 
 describe("It checks different pins to see if they are valid", function(){
     it("Checks a correct pin", function(){
-        expect(auth.checkPin(12)).toBe(true);
+        expect(auth.checkPin(16)).toBeGreaterThan(0);
     });
     it("Checks an incorrect pin", function(){
         expect(auth.checkPin(100)).toBe(false);

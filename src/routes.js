@@ -87,7 +87,10 @@ router.get("/blockList", function(req, res){
 });
 
 router.post("/blocklist", function(req,res){
-    eventFactory.removeBlock(req.body.reference);
+    if (auth.checkPin(req.body.pin))
+    {
+         eventFactory.removeBlock(req.body.reference);
+    }
 });
 
 router.get("/customEvents", function(req, res){
@@ -100,7 +103,10 @@ router.get("/customList", function(req, res){
 });
 
 router.post("/customList", function(req,res){
-    eventFactory.removeCustomEvent(req.body.reference);
+    if(auth.checkPin(req.body.pin))
+    {
+	eventFactory.removeCustomEvent(req.body.reference);
+    }
 });
 
 module.exports = router;
