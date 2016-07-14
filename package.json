@@ -19,6 +19,7 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "bootstrap": "^3.3.6",
+    "bootstrap-datetime-picker": "^2.3.10",
     "compression": "^1.6.2",
     "express": "^4.13.4",
     "helmet": "^2.1.0",
