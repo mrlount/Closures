@@ -26,6 +26,8 @@ function removeCustom(reference)
     $.ajax("customList", {
         method: "POST",
         data: data
-    }).done(getCustomList);
+    }).done(getCustomList).fail(
+        function(){alert("Removing custom event failed\nCheck your pin");}
+    );
 }
 

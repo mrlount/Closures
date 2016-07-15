@@ -26,6 +26,8 @@ function removeBlock(reference)
     $.ajax("blockList", {
         method: "POST",
         data: data
-    }).done(getBlockList);   
+    }).done(getBlockList).fail(
+        function(){alert("Removing block failed\nCheck your pin");}
+    );   
 }
 
