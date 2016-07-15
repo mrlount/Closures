@@ -17,6 +17,8 @@ var closureStrings = ["All lanes are closed", "All lanes will be closed"];
 var slanesStrings = ["are three of four lanes", "are two of three lanes", "is one of two lanes"];
 var futureSlanesStrings = ["will be three of four lanes", "will be two of three lanes", "will be one of two lanes"];
 
+setInterval(updateEvents,120000);
+
 function clearMarkers()
 {
     markers.forEach(function(marker){
