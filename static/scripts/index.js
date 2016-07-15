@@ -91,7 +91,7 @@ function placeEvents(data)
         contentString += event.description.replace(/\n/g, "<br>");
         contentString += '</div><div class="panel-footer ' + panelClass + '">';
         contentString += event.reference;
-        contentString += '<span><input type="text" id="' + event.reference + '" style="margin: 2px" autocomplete="off"><input type="button" class="btn btn-default" value="Remove" onclick="removeEvent(';
+        contentString += '<span><input type="text" id="' + event.reference + '" style="margin: 2px" autocomplete="off" placeholder="Enter Pin"><input type="button" class="btn btn-default" value="Remove" onclick="removeEvent(';
         contentString += "'";
         contentString += event.reference;
         contentString += "'";

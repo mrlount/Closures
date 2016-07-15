@@ -13,7 +13,8 @@ var eventFactory = eventService.getEventFactory();
 eventService.updateEvents();
 
 router.get('/', function(req, res) {
-  res.render('index');;
+  res.render('index');
+console.log(req.headers['x-forwarded-for'] + " : " + req.connection.remoteAddress);
 });
 
 router.get("/events", function(req, res){
@@ -90,7 +91,10 @@ router.post("/blocklist", function(req,res){
     if (auth.checkPin(req.body.pin))
     {
          eventFactory.removeBlock(req.body.reference);
+	res.sendStatus(200);
     }
+else
+	res.sendStatus(403);
 });
 
 router.get("/customEvents", function(req, res){
@@ -106,6 +110,11 @@ router.post("/customList", function(req,res){
     if(auth.checkPin(req.body.pin))
     {
 	eventFactory.removeCustomEvent(req.body.reference);
+	res.sendStatus(200);
+    }
+    else
+    {
+	res.sendStatus(403);
     }
 });
 

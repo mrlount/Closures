@@ -17,5 +17,5 @@ app.use('/', router);
 
 
 app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+  console.log('Test app listening on port 3000!');
 });
