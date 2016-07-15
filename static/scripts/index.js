@@ -38,6 +38,10 @@ function initMap()
         zoom: 9
     });
     map.addListener('rightclick', function(event){clickOnMap(event);});
+    
+    var trafficLayer = new google.maps.TrafficLayer();
+    trafficLayer.setMap(map);
+
     updateEvents();
 }
 
