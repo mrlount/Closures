@@ -40,12 +40,36 @@ router.post("/customevent", function(req, res){
     if(auth.checkPin(req.body.pin))
     {
         var event = {};
+				var laneText;
+				if (req.body.status === "Currently Active")
+					{
+						if(req.body.lanes === "All lanes")
+						{
+							laneText = "All lanes are closed";
+						}
+						else
+						{
+							laneText = "There are " + req.body.lanes + " closed";	
+						}
+					}
+				else
+					{
+						if(req.body.lanes === "All lanes")
+						{
+							laneText = "All lanes will be closed";
+						}
+						else
+						{
+							laneText = "There will be " + req.body.lanes + " closed";	
+						}
+					}
+			
         event.road = req.body.road;
         event.category = [];
         event.category[0] = req.body.category;
         event.category[1] = req.body.description;
         event.title = event.road + " " + req.body.direction + " " + event.category[0];
-        event.description = "Status: " + req.body.status + "\n" + "Lanes Closed: " + req.body.lanes + "\n" + "Description: " + req.body.description;
+        event.description = "Status: " + req.body.status + "\n" + "Lanes Closed: " + laneText + "\n" + "Description: " + req.body.description;
         event.latitude = req.body.latitude;
         event.longitude = req.body.longitude;
         var reference = new Date().getDate() + "-" + new Date().getMonth() + "-" + new Date().getYear() + "-" + Math.floor(Math.random() * 1000);
@@ -53,7 +77,7 @@ router.post("/customevent", function(req, res){
         event.eventStart = req.body.eventStart;
         event.creator = auth.checkPin(req.body.pin);
         eventFactory.addCustomEvent(event);
-        res.render('index');
+        res.sendStatus(200);
     }
     else
     {

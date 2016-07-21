@@ -161,7 +161,7 @@ function removeEvent(eventId)
     }).done(
         updateEvents()
         ).fail(
-        function(){alert("Adding block failed\nCheck your pin");}
+        function(){alert("Removing event failed\nCheck your pin");}
     );
 }
 
@@ -181,29 +181,30 @@ function clickOnMap(mouseevent)
     content: contentString
     });
     infowindow.open(map);
+    setTimeout(function () { infowindow.close(); }, 2000);
 }
 
 function createLogEvent(Lat, Lng)
 {
-    var contentString = '<form action="customevent" method="post" style="width: 400px"><div class="form-group"><label for="eventRoad">Road</label><select name="road" class="form-control" id="eventRoad">';
+    var contentString = '<div style="width: 480px"><label for="eventRoad">Road</label><select name="road" class="form-control" id="eventRoad">';
     motorways.forEach(function(mway){
         contentString += '<option>' + mway.road + '</option>';
     });
     aroads.forEach(function(aroad){
         contentString += '<option>' + aroad.road + '</option>';
     });
-    contentString += '</select></div>';
+    contentString += '</select>';
     contentString += '<div class="form-group"><label for="direction">Direction</label><select name="direction" id="direction" class="form-control"><option>Northbound</option><option>Southbound</option><option>Eastbound</option><option>Westbound</option><option>Clockwise</option><option>Anti-Clockwise</option></select></div>';
+    contentString += '<div class="form-group"><label for="eventStart">Start Date</label><input type="text" class="form-control" id="eventStart" name="eventStart" autocomplete="off" required></div>';
+    contentString += '<div class="form-group"><label for="eventEnd">End Date</label><input type="text" class="form-control" id="eventEnd" name="eventEnd" autocomplete="off"></div>';
     contentString += '<div class="form-group"><label for="pin">Pin Number</label><div><input type="text" name="pin" class="form-control" id="pin" autocomplete="off" required></div>';
     contentString += '<div class="form-group"><label for="category">Category</label><select name="category" class="form-control" id="category" required><option>Accident</option>Congestion<option>Road Works</option><option>Debris</option><option>Other</option></select></div>';
     contentString += '<div class="form-group"><label for="ActiveSelect">Status</label><select name="status" class="form-control" id="ActiveSelect" required><option>Currently Active</option><option>Pending</option></select>';
-    contentString += '<div class="form-group"><label for="ClosureType">Lanes Closed</label><select name="lanes" class="form-control" id="ClosureType" required><option>All lanes are closed</option><option>Two of Three Lanes</option><option>One of Three Lanes</option><option>One of Two Lanes</option><option>Three of Four Lanes</opton><option>Two of Four Lanes</opton><option>One of Four Lanes</opton></select></div>';
+    contentString += '<div class="form-group"><label for="ClosureType">Lanes Closed</label><select name="lanes" class="form-control" id="ClosureType" required><option>All lanes</option><option>two of three lanes</option><option>one of three lanes</option><option>one of two lanes</option><option>three of four lanes</opton><option>two of four lanes</opton><option>one of four Lanes</opton></select></div>';
     contentString += '<div class="form-group"><label for="description">Description</label><input class="form-control" type="text" id="description" name="description" required></div>';
-    contentString += '<div class="form-group"><label for="eventStart">Start Date</label><input type="text" class="form-control" id="eventStart" name="eventStart" required></div>';
-    contentString += '<input type="text" value="' + Lat + '" class="hidden" name="latitude">';
-    contentString += '<input type="text" value="' + Lng + '" class="hidden" name="longitude">';
-    contentString += '<button type="submit" class="btn btn-default">Submit</button>';
-    contentString += '</form>';
+    contentString += '<input type="text" value="' + Lat + '" class="hidden" id="latitude">';
+    contentString += '<input type="text" value="' + Lng + '" class="hidden" id="longitude">';
+    contentString += '<button id="customeventsubmit" class="btn btn-default">Submit</button></div>';
     
     var infowindow = new google.maps.InfoWindow({
     position: {lat: parseFloat(Lat), lng: parseFloat(Lng)},
@@ -214,5 +215,34 @@ function createLogEvent(Lat, Lng)
 
     $('#eventStart').datetimepicker({ 
         
+    });
+  
+    $('#eventEnd').datetimepicker({ 
+        
+    });
+  
+    document.getElementById("customeventsubmit").addEventListener("click",function(){
+      var options = {};
+      options.road = document.getElementById("eventRoad").value;
+      options.direction = document.getElementById("direction").value;
+      options.category = document.getElementById("category").value;
+      options.description = document.getElementById("description").value;
+      options.pin = document.getElementById("pin").value;
+      options.status = document.getElementById("ActiveSelect").value;
+      options.lanes = document.getElementById("ClosureType").value;
+      options.latitude = document.getElementById("latitude").value;
+      options.longitude = document.getElementById("longitude").value;
+      options.eventStart = document.getElementById("eventStart").value;
+      options.eventEnd = document.getElementById("eventEnd").value;
+      
+      $.ajax("customevent", {
+        method: "POST", 
+        data: options
+      }).done(
+      function(){updateEvents(); infowindow.close()}
+      ).fail(
+      function(){alert("Adding event failed\nCheck your pin");}
+    );
+      
     });
 }

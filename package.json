@@ -5,7 +5,7 @@
   "main": "index.js",
   "author": "http://warerebel.com",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "nodejs src/index.js",
     "test": "jasmine-node specs/"
   },
   "license": "GPL-3.0",
