@@ -14,3 +14,13 @@ html, body { height: 100%; margin: 0; padding: 0; }
 {
     margin-top: 10px;
 }
+
+#searchBox {
+    margin-top: 10px;
+    width: 300px;
+    height: 40px;
+    font-size: 15px;
+    font-weight: 300;
+    margin-left: 12px;
+    padding: 0 11px 0 13px;
+}

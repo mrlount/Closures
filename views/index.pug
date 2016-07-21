@@ -9,6 +9,7 @@ html(lang="en")
     div(class="container-fluid")
       div(class="row")
         div(class="col-sm-9 col-xs-12")
+          input(id="searchBox", class="controls", type="text", placeholder="Search Box")
           div(id="map")
         div(class="col-sm-3 col-xs-12")
           div(class="panel panel-default")
@@ -44,4 +45,4 @@ html(lang="en")
                   input(type="checkbox", value="includeslanes", id="includeslanes" onclick="updateEvents()") 
                   | Include works with only lane closures
               
-    script(src="https://maps.googleapis.com/maps/api/js?callback=initMap", async, defer)
+    script(src="https://maps.googleapis.com/maps/api/js?callback=initMap&libraries=places", async, defer)

@@ -66,7 +66,7 @@ eventFactory.prototype.getEvents = function(){
 eventFactory.prototype.getUnblockedEvents = function(){
     var me = this;
     var tempReturn = [];
-    this.events.getEvents().forEach(function(event){
+    this.getEvents().forEach(function(event){
         var tempEvent = {};
         for(var property in event)
         {
