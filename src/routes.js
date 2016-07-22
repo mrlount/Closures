@@ -69,7 +69,11 @@ router.post("/customevent", function(req, res){
         event.category[0] = req.body.category;
         event.category[1] = req.body.description;
         event.title = event.road + " " + req.body.direction + " " + event.category[0];
-        event.description = "Status: " + req.body.status + "\n" + "Lanes Closed: " + laneText + "\n" + "Description: " + req.body.description;
+        event.description = "Status: " + req.body.status + "\nLanes Closed: " + laneText + "\nDescription: " + req.body.description + "\nStart Time: " + req.body.eventStart; 
+				if (req.body.eventEnd)
+					{
+						event.description += "\nEnd Time: " + req.body.eventEnd;
+					}
         event.latitude = req.body.latitude;
         event.longitude = req.body.longitude;
         var reference = new Date().getDate() + "-" + new Date().getMonth() + "-" + new Date().getYear() + "-" + Math.floor(Math.random() * 1000);
