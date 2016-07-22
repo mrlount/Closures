@@ -61,7 +61,7 @@ function initMap()
         searchBox.addListener('places_changed', function() {
           var places = searchBox.getPlaces();
 
-          if (places.length == 0) {
+          if (places.length === 0) {
             return;
           }
 
@@ -205,7 +205,7 @@ function removeEvent(eventId)
         method: "POST", 
         data: options
     }).done(
-        updateEvents()
+        setTimeout(function(){updateEvents()},1000) 
         ).fail(
         function(){alert("Removing event failed\nCheck your pin");}
     );
@@ -285,7 +285,7 @@ function createLogEvent(Lat, Lng)
         method: "POST", 
         data: options
       }).done(
-      function(){updateEvents(); infowindow.close()}
+      setTimeout(function(){updateEvents(); infowindow.close()}, 1000)
       ).fail(
       function(){alert("Adding event failed\nCheck your pin");}
     );
