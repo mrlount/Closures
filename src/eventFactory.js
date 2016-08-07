@@ -135,6 +135,11 @@ eventFactory.prototype.removeCustomEvents = function()
     this.customEvents.clearEvents();
 };
 
+eventFactory.prototype.cleanCustomEvents = function()
+{
+    this.customEvents.cleanEvents();
+};
+
 // Only for testing
 eventFactory.prototype.addEvent = function(event)
 {

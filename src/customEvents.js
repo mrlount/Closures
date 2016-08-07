@@ -54,4 +54,17 @@ customEvent.prototype.clearEvents = function()
     this.events = [];
 };
 
+customEvent.prototype.cleanEvents = function()
+{
+    var me = this;
+    var targetDate = new Date();
+    this.events.forEach(function(event){
+        var endDate = new Date(event.endDate);
+        if (endDate < targetDate)
+        {
+            me.removeEvent(event.reference);
+        }
+    });
+};
+
 module.exports = customEvent;

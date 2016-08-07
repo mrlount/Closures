@@ -79,6 +79,7 @@ router.post("/customevent", function(req, res){
         var reference = new Date().getDate() + "-" + new Date().getMonth() + "-" + new Date().getYear() + "-" + Math.floor(Math.random() * 1000);
         event.reference = reference;
         event.eventStart = req.body.eventStart;
+        event.endDate = req.body.eventEnd;
         event.creator = auth.checkPin(req.body.pin);
         eventFactory.addCustomEvent(event);
         res.sendStatus(200);

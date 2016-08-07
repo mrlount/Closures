@@ -18,6 +18,7 @@ eventService.prototype.updateEvents = function()
     this.eventFactory.updateEvents();
     setInterval(function(){me.eventFactory.updateEvents()},120000);
     setInterval(function(){me.eventFactory.cleanBlocks()},103000);
+    setInterval(function(){me.eventFactory.cleanCustomEvents()},110000);
 }
 
 eventService.prototype.getEventFactory = function(){
