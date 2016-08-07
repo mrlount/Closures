@@ -112,7 +112,7 @@ eventFactory.prototype.getBlockList = function()
 
 eventFactory.prototype.cleanBlocks = function()
 {
-    return this.blocks.cleanBlocks(this.events.getEvents());
+    this.blocks.cleanBlocks(this.getEvents());
 };
 
 eventFactory.prototype.getCustomEvents = function()
