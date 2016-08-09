@@ -1,4 +1,5 @@
 var markers = [];
+var gazmarkers = [];
 var map;
 
 var motorways = [{road: "M1"}, {road:"M2"}, {road:"M3"}, {road:"M4"}, {road:"M5"}, {road:"M6"}, {road:"M11"}, {road:"M18"}, {road:"M20"}, {road:"M23"}, {road:"M25"}, {road:"M26"}, {road:"M27"}, {road:"M32"}, {road:"M40"}, {road:"M42"}, {road:"M45"}, {road:"M49"}, {road:"M50"}, {road:"M53"}, {road:"M54"}, {road:"M55"}, {road:"M56"}, {road:"M57"}, {road:"M58"}, {road:"M60"}, {road:"M61"}, {road:"M62"}, {road:"M65"}, {road:"M66"}, {road:"M67"}, {road:"M69"}, {road:"M180"}, {road:"M181"}, {road:"M271"}, {road:"M275"}, {road:"M602"}, {road:"M621"}];
@@ -292,3 +293,38 @@ function createLogEvent(Lat, Lng)
       
     });
 }
+
+function updateGazetteer()
+{
+    //console.log($("#includegazetteer").prop("checked"));
+
+    if($("#includegazetteer").prop("checked"))
+    {
+        $.ajax("static/scripts/finalgaz.json", {
+        method: "GET"
+    }).done(placeGaz);
+    }
+    else
+    {
+        gazmarkers.forEach(function(marker){
+            marker.setMap(null);
+        });
+    gazmarkers = null;
+    gazmarkers = [];
+    }
+}
+
+function placeGaz(data)
+{
+    data.forEach(function(event){
+        var myLatLng = {lat: parseFloat(event.lat), lng: parseFloat(event.lon)};
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            title: event.userFormat,
+            icon: "static/images/blue.png"
+        });
+        gazmarkers.push(marker);
+    });
+}
+
