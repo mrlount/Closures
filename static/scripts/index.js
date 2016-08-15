@@ -298,9 +298,7 @@ function updateGazetteer()
 {
     if($("#includegazetteer").prop("checked"))
     {
-        kmlLayer = new google.maps.KmlLayer;
-        kmlLayer.setUrl("");
-        kmlLayer.setMap(map);
+        kmlLayer = new google.maps.KmlLayer({url: "http://port-3000.8q0ukaipbk7nl8fro0xzgwzj2n9afw29373kpgjpjkcyds4i.box.codeanywhere.com/static/scripts/finalgaz2.kml", map: map});
     }
     else
     {
