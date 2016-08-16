@@ -44,10 +44,5 @@ html(lang="en")
                 label(for="includeslanes")
                   input(type="checkbox", value="includeslanes", id="includeslanes" onclick="updateEvents()") 
                   | Include works with only lane closures
-              hr
-              div(class="checkbox")
-                label(for="includegazetteer")
-                  input(type="checkbox", value="includegazetteer", id="includegazetteer" onclick="updateGazetteer()") 
-                  | Include gazetteer layer
               
-    script(src="https://maps.googleapis.com/maps/api/js?callback=initMap&libraries=places", async, defer)
+    script(src="https://maps.googleapis.com/maps/api/js?callback=initMap&libraries=places,geometry", async, defer)

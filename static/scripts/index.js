@@ -1,6 +1,6 @@
 var markers = [];
-var kmlLayer;
 var map;
+var gazJson;
 
 var motorways = [{road: "M1"}, {road:"M2"}, {road:"M3"}, {road:"M4"}, {road:"M5"}, {road:"M6"}, {road:"M11"}, {road:"M18"}, {road:"M20"}, {road:"M23"}, {road:"M25"}, {road:"M26"}, {road:"M27"}, {road:"M32"}, {road:"M40"}, {road:"M42"}, {road:"M45"}, {road:"M49"}, {road:"M50"}, {road:"M53"}, {road:"M54"}, {road:"M55"}, {road:"M56"}, {road:"M57"}, {road:"M58"}, {road:"M60"}, {road:"M61"}, {road:"M62"}, {road:"M65"}, {road:"M66"}, {road:"M67"}, {road:"M69"}, {road:"M180"}, {road:"M181"}, {road:"M271"}, {road:"M275"}, {road:"M602"}, {road:"M621"}];
 var aroads = [{road: "A1"}, {road: "A1(M)"}, {road: "A2"}, {road: "A3"}, {road: "A3(M)"}, {road: "A4"}, {road: "A5"}, {road: "A6"}, {road: "A11"}, {road: "A12"}, {road: "A13"}, {road: "A14"}, {road: "A19"}, {road: "A20"}, {road: "A21"}, {road: "A23"}, {road: "A26"}, {road: "A27"}, {road: "A28"}, {road: "A30"}, {road: "A31"}, {road: "A34"}, {road: "A35"}, {road: "A36"}, {road: "A38"}, {road: "A38(M)"}, {road: "A40"}, {road: "A41"}, {road: "A42"}, {road: "A43"}, {road: "A45"}, {road: "A46"}, {road: "A47"}, {road: "A49"}, {road: "A50"}, {road: "A52"}, {road: "A55"}, {road: "A56"}, {road: "A57"}, {road: "A57(M)"}, {road: "A58"}, {road: "A58(M)"}, {road: "A59"}, {road: "A61"}, {road: "A62"}, {road: "A63"}, {road: "A64"}, {road: "A64(M)"}, {road: "A66"}, {road: "A67"}, {road: "A68"}, {road: "A69"}, {road: "A74(M)"}, {road: "A75"}, {road: "A120"}, {road: "A160"}, {road: "A162"}, {road: "A167"}, {road: "A167(M)"}, {road: "A168"}, {road: "A172"}, {road: "A174"}, {road: "A180"}, {road: "A184"}, {road: "A194(M)"}, {road: "A228"}, {road: "A229"}, {road: "A249"}, {road: "A251"}, {road: "A259"}, {road: "A260"}, {road: "A282"}, {road: "A292"}, {road: "A296"}, {road: "A303"}, {road: "A308(M)"}, {road: "A309"}, {road: "A316"}, {road: "A329M"}, {road: "A403"}, {road: "A404"}, {road: "A404M"}, {road: "A405"}, {road: "A406"}, {road: "A414"}, {road: "A417"}, {road: "A419"}, {road: "A421"}, {road: "A428"}, {road: "A435"}, {road: "A446"}, {road: "A449"}, {road: "A452"}, {road: "A453"}, {road: "A454"}, {road: "A456"}, {road: "A458"}, {road: "A460"}, {road: "A461"}, {road: "A463"}, {road: "A465"}, {road: "A483"}, {road: "A491"}, {road: "A494"}, {road: "A500"}, {road: "A516"}, {road: "A550"}, {road: "A556"}, {road: "A560"}, {road: "A580"}, {road: "A585"}, {road: "A590"}, {road: "A595"}, {road: "A601(M)"}, {road: "A614"}, {road: "A616"}, {road: "A627(M)"}, {road: "A628"}, {road: "A631"}, {road: "A638"}, {road: "A643"}, {road: "A663"}, {road: "A696"}, {road: "A1001"}, {road: "A1023"}, {road: "A1033"}, {road: "A1053"}, {road: "A1057"}, {road: "A1081"}, {road: "A1089"}, {road: "A1198"}, {road: "A2070"}, {road: "A2270"}, {road: "A3113"}, {road: "A4010"}, {road: "A4036"}, {road: "A4041"}, {road: "A4114"}, {road: "A4123"}, {road: "A4540"}, {road: "A4600"}, {road: "A5036"}, {road: "A5080"}, {road: "A5103"}, {road: "A5111"}, {road: "A5117"}, {road: "A5127"}, {road: "A5139"}, {road: "A5148"}, {road: "A5300"}, {road: "A6129"}]; 
@@ -90,7 +90,11 @@ function initMap()
           });
           map.fitBounds(bounds);
         });
-
+		
+		// Preload gazetteer locations
+		$.ajax("static/scripts/gaz.json", {
+        method: "GET"
+		}).done(function(data){gazJson = data;});
   
 }
 
@@ -216,13 +220,20 @@ function clickOnMap(mouseevent)
 {
     var latitude = mouseevent.latLng.lat();
     var longitude = mouseevent.latLng.lng();
-    var contentString = '<input type="button" class="btn btn-default" value="Create Event" onclick="createLogEvent(';
+    var contentString = '<div><input type="button" class="btn btn-default" value="Create Event" onclick="createLogEvent(';
     contentString += "'";
     contentString += latitude;
     contentString += "','";
     contentString += longitude;
     contentString += "'"; 
-    contentString += ')"></input>';
+    contentString += ')"></input></div><hr>';
+	contentString += '<div><input type="button" class="btn btn-default" value="Gazetteer" onclick="gazetteer(';
+    contentString += "'";
+    contentString += latitude;
+    contentString += "','";
+    contentString += longitude;
+    contentString += "'"; 
+    contentString += ')"></input></div>';
     var infowindow = new google.maps.InfoWindow({
     position: mouseevent.latLng,
     content: contentString
@@ -294,14 +305,57 @@ function createLogEvent(Lat, Lng)
     });
 }
 
-function updateGazetteer()
+function gazetteer(lon, lat)
 {
-    if($("#includegazetteer").prop("checked"))
-    {
-        kmlLayer = new google.maps.KmlLayer({url: "http://port-3000.8q0ukaipbk7nl8fro0xzgwzj2n9afw29373kpgjpjkcyds4i.box.codeanywhere.com/static/scripts/finalgaz2.kml", map: map});
-    }
-    else
-    {
-        kmlLayer.setMap(null);
-    }
+	var nearest = -1;
+	var secondNearest = -1;
+	gazJson.forEach(function(item){
+		item.distance = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(parseFloat(lat), parseFloat(lon)), new google.maps.LatLng(parseFloat(item.lat), parseFloat(item.lon)));
+		if (nearest === -1)
+		{
+			nearest = item;
+			secondNearest = item;
+		}
+		else if (item.distance < nearest.distance)
+		{
+			secondNearest = nearest;
+			nearest = item;
+		}
+		else if(item.distance < secondNearest.distance)
+		{
+			secondNearest = item;
+		}
+	});
+	
+	var nearestMarker = new google.maps.Marker({
+	position: { lat: parseFloat(nearest.lon), lng: parseFloat(nearest.lat)},
+            map: map,
+			title: nearest.name,
+			icon: "static/images/blue.png"
+        });
+	
+	var nextNearestMarker = new google.maps.Marker({
+	position: { lat: parseFloat(secondNearest.lon), lng: parseFloat(secondNearest.lat)},
+            map: map,
+			title: secondNearest.name,
+			icon: "static/images/blue.png"
+        });
+	
+	var infowindowNear = new google.maps.InfoWindow({
+            content: nearest.name
+        });
+		
+	var infowindowNext = new google.maps.InfoWindow({
+            content: secondNearest.name
+        });
+		
+	nearestMarker.addListener('click', function() {
+            infowindowNear.open(map, nearestMarker);
+        });
+		
+	nextNearestMarker.addListener('click', function() {
+            infowindowNext.open(map, nextNearestMarker);
+        });
+		
+	setTimeout(function(){infowindowNear.close(); infowindowNext.close(); nearestMarker.setMap(null), nextNearestMarker.setMap(null);},30000);
 }
