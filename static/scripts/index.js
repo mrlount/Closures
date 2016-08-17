@@ -307,55 +307,36 @@ function createLogEvent(Lat, Lng)
 
 function gazetteer(lon, lat)
 {
-	var nearest = -1;
-	var secondNearest = -1;
+	var gazPoints = [];
 	gazJson.forEach(function(item){
 		item.distance = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(parseFloat(lat), parseFloat(lon)), new google.maps.LatLng(parseFloat(item.lat), parseFloat(item.lon)));
-		if (nearest === -1)
-		{
-			nearest = item;
-			secondNearest = item;
-		}
-		else if (item.distance < nearest.distance)
-		{
-			secondNearest = nearest;
-			nearest = item;
-		}
-		else if(item.distance < secondNearest.distance)
-		{
-			secondNearest = item;
-		}
+		gazPoints.push(item);
 	});
 	
-	var nearestMarker = new google.maps.Marker({
-	position: { lat: parseFloat(nearest.lon), lng: parseFloat(nearest.lat)},
-            map: map,
-			title: nearest.name,
-			icon: "static/images/blue.png"
-        });
+	gazPoints.sort(function(a, b){return a.distance - b.distance });
 	
-	var nextNearestMarker = new google.maps.Marker({
-	position: { lat: parseFloat(secondNearest.lon), lng: parseFloat(secondNearest.lat)},
-            map: map,
-			title: secondNearest.name,
-			icon: "static/images/blue.png"
-        });
+	var usingPoints = gazPoints.slice(0,9);
 	
-	var infowindowNear = new google.maps.InfoWindow({
-            content: nearest.name
+	usingPoints.forEach(function(item){
+		
+		var marker = new google.maps.Marker({position: { lat: parseFloat(item.lon), lng: parseFloat(item.lat)},
+      map: map,
+			title: item.name,
+			icon: "static/images/blue.png"
+      });
+		
+		var infowindow = new google.maps.InfoWindow({
+            content: item.name
         });
 		
-	var infowindowNext = new google.maps.InfoWindow({
-            content: secondNearest.name
+		marker.addListener('mouseover', function() {
+            infowindow.open(map, marker);
         });
 		
-	nearestMarker.addListener('click', function() {
-            infowindowNear.open(map, nearestMarker);
+		marker.addListener('mouseout', function() {
+            infowindow.close();
         });
 		
-	nextNearestMarker.addListener('click', function() {
-            infowindowNext.open(map, nextNearestMarker);
-        });
-		
-	setTimeout(function(){infowindowNear.close(); infowindowNext.close(); nearestMarker.setMap(null), nextNearestMarker.setMap(null);},30000);
+		setTimeout(function(){infowindow.close(); marker.setMap(null);},30000);
+	});
 }
