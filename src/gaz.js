@@ -6,7 +6,6 @@ function gaz(){
 
 gaz.prototype.getPoints = function(lat, lon)
 {
-  console.log("received lat: " + lat + " lon: " + lon);
 	var gazPoints = [];
   var me = this;
 	this.gazetteer.forEach(function(item){
