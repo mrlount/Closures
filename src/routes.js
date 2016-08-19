@@ -6,10 +6,12 @@ var eventsServiceModule = require('./eventService.js');
 var querystring = require("querystring");
 var url = require("url");
 var authModule = require("./auth.js");
+var gazObject = require("./gaz.js");
 
 var auth = new authModule();
 var eventService = new eventsServiceModule();
 var eventFactory = eventService.getEventFactory();
+var gaz = new gazObject();
 eventService.updateEvents();
 
 router.get('/', function(req, res) {
@@ -145,6 +147,11 @@ router.post("/customList", function(req,res){
     {
 	res.sendStatus(403);
     }
+});
+
+router.post("/gazDistance", function(req, res){
+	var results = gaz.getPoints(req.body.lat, req.body.lon);
+	res.json(results);
 });
 
 module.exports = router;

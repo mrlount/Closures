@@ -91,10 +91,7 @@ function initMap()
           map.fitBounds(bounds);
         });
 		
-		// Preload gazetteer locations
-		$.ajax("static/scripts/gaz.json", {
-        method: "GET"
-		}).done(function(data){gazJson = data;});
+		
   
 }
 
@@ -307,15 +304,14 @@ function createLogEvent(Lat, Lng)
 
 function gazetteer(lon, lat)
 {
-	var gazPoints = [];
-	gazJson.forEach(function(item){
-		item.distance = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(parseFloat(lat), parseFloat(lon)), new google.maps.LatLng(parseFloat(item.lat), parseFloat(item.lon)));
-		gazPoints.push(item);
-	});
-	
-	gazPoints.sort(function(a, b){return a.distance - b.distance });
-	
-	var usingPoints = gazPoints.slice(0,9);
+	// Preload gazetteer locations
+		$.ajax("/gazDistance", {
+        method: "POST",
+				data: {lon: lon, lat: lat}
+		}).done(doGaz)
+}
+
+function doGaz(usingPoints){
 	
 	usingPoints.forEach(function(item){
 		
